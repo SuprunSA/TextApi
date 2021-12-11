@@ -35,7 +35,12 @@ namespace TextApi.Controllers
         [HttpGet("getRange")]
         public ActionResult GetRange(int first, int last)
         {
-            return Ok(FileWorker.GetRange(first, last));
+            var len = GetLen();
+            if (first < 1 || first > len || last > len || last < 1 || first > last)
+            {
+                return NotFound("введены некорректные границы списка");
+            }
+            else return Ok(FileWorker.GetRange(first, last));
         }
 
 
